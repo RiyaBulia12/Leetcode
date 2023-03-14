@@ -1,8 +1,4 @@
 // 724. Find Pivot Index
-// Easy
-// 6.5K
-// 699
-// Companies
 // Given an array of integers nums, calculate the pivot index of this array.
 
 // The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
@@ -47,25 +43,17 @@
  */
 var pivotIndex = function(nums) {
     let lhs = 0; 
-    let rhs = 0;
-    let pivot = -1;
-    let i=0;
-    for(;i<nums.length; i++) {
-        for(let k=i; k>0; k--){
-            lhs += nums[k-1];
-        }
+    let rhs = nums.reduce((a,b) => a+b) - nums[0];
+    let pivot = 0;
 
-        for(let j=i+1; j<nums.length; j++) {
-            rhs += nums[j];
-        }
-
+    while(pivot < nums.length){
         if(lhs === rhs){
-            pivot = i;
-            break;
-        } else {
-            lhs = 0;
-            rhs = 0;
+            return pivot;
         }
+        lhs += nums[pivot];
+        pivot++;
+        rhs -= nums[pivot];
+        
     }
-    return pivot;
+    return -1;
 };
